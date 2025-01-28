@@ -5,5 +5,5 @@
 <h1 align="center">🌌 SPIGNOS</h1>
 
 <p align="center">
-    <b>Un projet open-source révolutionnaire pour simplifier vos workflows de data science</b>
+    <b>Structured Platform for Interoperable Generative, Normalized, and Optimized Systems</b>
 </p>
