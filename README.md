@@ -1,9 +1,12 @@
 <p align="center">
     <img src="assets/SPIGNOS.png" alt="SPIGNOS Logo" width="80%">
-    <img src="assets/spignos_sequence_diagram.png" alt="SPIGNOS Logo" width="40%">
+</p>
+<p align="center">
+    <img src="docs/spignos_sequence_diagram.png" alt="SPIGNOS Logo" width="40%">
+</p>
+<p align="center">
     <img src="assets/spignos_architecture.png" alt="SPIGNOS Logo" width="80%">
 </p>
-
 <h1 align="center">🌌 SPIGNOS</h1>
 
 <p align="center">
