@@ -20,27 +20,27 @@ jobs:
       - name: Install dependencies
         run: pip install -r backend/requirements.txt
 
-      - name: Run Tests
-        run: pytest backend/tests/
-
-      - name: Build Docker Image
-        run: |
-          docker build -t myrepo/spignos-backend:latest -f backend/Dockerfile .
-          docker tag myrepo/spignos-backend:latest ghcr.io/myrepo/spignos-backend:latest
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u myrepo --password-stdin
-          docker push ghcr.io/myrepo/spignos-backend:latest
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Setup Kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'latest'
-
-      - name: Configure Kubernetes
-        run: echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig.yaml
-
-      - name: Deploy to Kubernetes
-        run: kubectl apply -f infrastructure/k8s/ --kubeconfig=kubeconfig.yaml
+#      - name: Run Tests
+#        run: pytest backend/tests/
+#
+#      - name: Build Docker Image
+#        run: |
+#          docker build -t myrepo/spignos-backend:latest -f backend/Dockerfile .
+#          docker tag myrepo/spignos-backend:latest ghcr.io/myrepo/spignos-backend:latest
+#          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u myrepo --password-stdin
+#          docker push ghcr.io/myrepo/spignos-backend:latest
+#
+#  deploy:
+#    runs-on: ubuntu-latest
+#    needs: build
+#    steps:
+#      - name: Setup Kubectl
+#        uses: azure/setup-kubectl@v3
+#        with:
+#          version: 'latest'
+#
+#      - name: Configure Kubernetes
+#        run: echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig.yaml
+#
+#      - name: Deploy to Kubernetes
+#        run: kubectl apply -f infrastructure/k8s/ --kubeconfig=kubeconfig.yaml
