@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: spignos_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: spignos
+      POSTGRES_USER: spignos
+      POSTGRES_PASSWORD: spignos_secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql  # Correction ici
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ../backend
+    container_name: spignos_backend
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
+
