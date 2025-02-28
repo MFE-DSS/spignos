@@ -1,21 +1,23 @@
 FROM python:3.10
 
-# Définir le répertoire de travail dans le conteneur
+# Définir le répertoire de travail du conteneur
 WORKDIR /app
 
-# Copier uniquement les dépendances pour optimiser le cache Docker
-COPY backend/requirements.txt ./
+# Copier les dépendances
+COPY requirements.txt ./
 
 # Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copier tout le projet backend dans /app/
-COPY backend /app/
+# Copier tout le projet Django
+COPY . /app/
 
-# Vérifier que spignosapi et manage.py sont bien copiés
+# Vérifier la présence des fichiers
 RUN ls -la /app
-RUN ls -la /app/spignosapi
 RUN ls -la /app/spignosapi/spignosapi
 
-# Lancer Gunicorn en pointant vers le bon chemin du projet Django
+# Exposer le port (si nécessaire)
+EXPOSE 8000
+
+# Lancer Gunicorn avec le bon chemin
 CMD ["gunicorn", "--chdir", "/app", "--bind", "0.0.0.0:8000", "spignosapi.wsgi:application"]
