@@ -1,5 +1,9 @@
 from django_ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator
+from rest_framework.views import APIView
+
+import logging
+
 logger = logging.getLogger(__name__)
 
 class RateLimitedAPIView(APIView):

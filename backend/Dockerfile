@@ -16,8 +16,10 @@ COPY . /app/
 RUN ls -la /app/spignosapi/spignosapi
 
 # Définir PYTHONPATH pour éviter les erreurs d'importation
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/spignos/spignosapi
 
+
+ENV DJANGO_SETTINGS_MODULE=spignosapi.spignosapi.settings
 
 # Exposer le port de l'API
 EXPOSE 8000
