@@ -1,5 +1,6 @@
 version: '3.8'
 
+
 services:
   postgres:
     image: postgres:15
@@ -9,6 +10,7 @@ services:
       POSTGRES_DB: spignos
       POSTGRES_USER: spignos
       POSTGRES_PASSWORD: spignos_secret
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql  # Correction ici
@@ -20,6 +22,7 @@ services:
     container_name: spignos_backend
     restart: always
     environment:
+      - PYTHONPATH=/app
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
