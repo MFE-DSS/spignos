@@ -18,11 +18,12 @@ services:
       - "5432:5432"
 
   backend:
-    build: ../backend
+    build:
+      context: ../   # Change ici pour pointer vers la racine du projet
+      dockerfile: backend/Dockerfile
     container_name: spignos_backend
     restart: always
     environment:
-      - PYTHONPATH=/app
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
