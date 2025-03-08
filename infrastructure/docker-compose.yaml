@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 version: '3.8'
 
 
@@ -46,3 +47,20 @@ services:
 volumes:
   postgres_data:
 
+=======
+services:
+  backend:
+    build: ../backend
+    container_name: spignos_backend
+    restart: always
+    environment:
+      - POSTGRES_DB=spignos
+      - POSTGRES_USER=spignos
+      - POSTGRES_PASSWORD=spignos_secret
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+>>>>>>> Stashed changes
