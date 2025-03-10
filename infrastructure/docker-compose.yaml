@@ -1,39 +1,35 @@
-<<<<<<< Updated upstream
 version: '3.8'
 
-
 services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: spignos_backend
+    restart: always
+    environment:
+      - POSTGRES_DB=spignos
+      - POSTGRES_USER=spignos
+      - POSTGRES_PASSWORD=spignos_secret
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+
   postgres:
     image: postgres:15
     container_name: spignos_postgres
     restart: always
     environment:
-      POSTGRES_DB: spignos
-      POSTGRES_USER: spignos
-      POSTGRES_PASSWORD: spignos_secret
-
+      - POSTGRES_DB=spignos
+      - POSTGRES_USER=spignos
+      - POSTGRES_PASSWORD=spignos_secret
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql  # Correction ici
     ports:
       - "5432:5432"
-
-  backend:
-    build:
-      context: ../   # Change ici pour pointer vers la racine du projet
-      dockerfile: backend/Dockerfile
-    container_name: spignos_backend
-    restart: always
-    environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-      - POSTGRES_PORT=${POSTGRES_PORT}
-    depends_on:
-      - postgres
-    ports:
-      - "8000:8000"
 
   prometheus:
     image: prom/prometheus
@@ -43,24 +39,6 @@ services:
     ports:
       - "9090:9090"
 
-
 volumes:
   postgres_data:
-
-=======
-services:
-  backend:
-    build: ../backend
-    container_name: spignos_backend
-    restart: always
-    environment:
-      - POSTGRES_DB=spignos
-      - POSTGRES_USER=spignos
-      - POSTGRES_PASSWORD=spignos_secret
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-    ports:
-      - "8000:8000"
-    depends_on:
-      - postgres
->>>>>>> Stashed changes
+    driver: local
