@@ -10,5 +10,6 @@ urlpatterns = [
     path('conversations/<int:user_id>/', ListConversations.as_view(), name="list_conversations"),
     path('chat/<int:conversation_id>/', ChatAPI.as_view(), name="chat_api"),
     path('api/auth/', include('api.auth')),
+    path('api/', include('spignosapi.api.urls')),
 ]
 
