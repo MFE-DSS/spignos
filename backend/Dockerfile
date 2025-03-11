@@ -1,21 +1,19 @@
 FROM python:3.10
 
 # Définir le répertoire de travail
-FROM python:3.10
-
-# Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copier uniquement les dépendances pour optimiser le cache
+# Copier uniquement les dépendances
 COPY requirements.txt ./
 
 # Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copier tout le projet Django
+# Copier tout le backend
 COPY . /app/
 
-# Vérifier que le dossier contenant settings.py est bien copié
+# Vérifier que les fichiers sont bien copiés
+RUN ls -la /app/spignosapi
 RUN ls -la /app/spignosapi/spignosapi
 
 # Définir PYTHONPATH et DJANGO_SETTINGS_MODULE
@@ -27,4 +25,3 @@ EXPOSE 8000
 
 # Lancer Gunicorn avec le bon chemin de module
 CMD ["gunicorn", "--chdir", "/app", "--bind", "0.0.0.0:8000", "spignosapi.spignosapi.wsgi:application"]
-
