@@ -13,7 +13,7 @@ from datetime import timedelta
 
 from pathlib import Path
 import os
-
+from backend.spignosapi.api import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework_simplejwt',
     'rest_framework',
-    'spignosapi.api',
+    'backend.spignosapi.api',
+    'spignosapi.api'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
