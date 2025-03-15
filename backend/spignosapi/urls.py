@@ -19,5 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),  # Inclure les endpoints de l’API
+    path('api/', include('spignosapi.api.urls')),  # Inclure les endpoints de l’API
 ]

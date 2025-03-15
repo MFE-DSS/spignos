@@ -13,7 +13,7 @@ from datetime import timedelta
 
 from pathlib import Path
 import os
-import api
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework_simplejwt',
     'rest_framework',
-    'backend.spignosapi.api',
     'spignosapi.api'
 ]
 REST_FRAMEWORK = {
@@ -101,7 +100,7 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB', 'spignos'),
         'USER': os.getenv('POSTGRES_USER', 'spignos'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'spignos_secret'),
-        'HOST': os.getenv('POSTGRES_HOST', 'postgres'),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
