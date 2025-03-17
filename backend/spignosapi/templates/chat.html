@@ -1,0 +1,15 @@
+<input type="text" id="message" placeholder="Tapez votre message">
+<button onclick="sendMessage()">Envoyer</button>
+<div id="response"></div>
+
+<script>
+    function sendMessage() {
+        let message = document.getElementById("message").value;
+        fetch('/api/chat/', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ "text": message })
+        }).then(response => response.json())
+          .then(data => { document.getElementById("response").innerText = data.response; });
+    }
+</script>

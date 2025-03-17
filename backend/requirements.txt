@@ -5,3 +5,7 @@ psycopg2-binary
 djangorestframework-simplejwt
 django-ratelimit
 prometheus_client
+transformers
+torch
+sentence-transformers
+faiss-cpu
