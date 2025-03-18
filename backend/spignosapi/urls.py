@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import chat_page
+from backend.spignosapi.views import chat_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('spignosapi.api.urls')),  # API principale
-    path('chat/', chat_page, name="chat"),  # ✅ Page de chat
+    path('chat/', chat_page, name="chat"),  # ✅ Page de chat accessible
 ]

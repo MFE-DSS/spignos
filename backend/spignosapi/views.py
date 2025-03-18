@@ -2,14 +2,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .models import Conversation, Message
-from .serializers import MessageSerializer
+from backend.spignosapi.api.models import Conversation, Message
+
+from backend.spignosapi.api.serializers import MessageSerializer  # ✅ Correction de l'importation
+
 from transformers import pipeline
 from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
 
 from django.shortcuts import render
+
 
 # 🔹 Charger un modèle de génération de texte (LLM)
 llm_pipeline = pipeline("text-generation", model="mistralai/Mistral-7B-Instruct-v0.1")
@@ -28,6 +31,7 @@ knowledge_base = [
 knowledge_vectors = np.array([embedding_model.encode(text) for text in knowledge_base], dtype="float32")
 index = faiss.IndexFlatL2(knowledge_vectors.shape[1])
 index.add(knowledge_vectors)
+
 
 def chat_page(request):
     return render(request, 'chat.html')
