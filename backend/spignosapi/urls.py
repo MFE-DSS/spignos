@@ -14,12 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
-from .views import ChatAPI, CreateConversation, ListConversations
+from django.contrib import admin
+from django.urls import path, include
+from .views import chat_page
 
 urlpatterns = [
-    path('conversation/create/', CreateConversation.as_view(), name="create_conversation"),
-    path('conversations/<int:user_id>/', ListConversations.as_view(), name="list_conversations"),
-    path('chat/', ChatAPI.as_view(), name="chat_api"),  # ✅ Endpoint principal
-    path('chat/<int:conversation_id>/', ChatAPI.as_view(), name="chat_conversation"),
+    path('admin/', admin.site.urls),
+    path('api/', include('spignosapi.api.urls')),  # API principale
+    path('chat/', chat_page, name="chat"),  # ✅ Page de chat
 ]

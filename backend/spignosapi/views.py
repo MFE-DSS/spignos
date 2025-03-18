@@ -9,6 +9,8 @@ from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
 
+from django.shortcuts import render
+
 # 🔹 Charger un modèle de génération de texte (LLM)
 llm_pipeline = pipeline("text-generation", model="mistralai/Mistral-7B-Instruct-v0.1")
 
@@ -26,6 +28,9 @@ knowledge_base = [
 knowledge_vectors = np.array([embedding_model.encode(text) for text in knowledge_base], dtype="float32")
 index = faiss.IndexFlatL2(knowledge_vectors.shape[1])
 index.add(knowledge_vectors)
+
+def chat_page(request):
+    return render(request, 'chat.html')
 
 
 def retrieve_information(query):
