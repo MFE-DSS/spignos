@@ -1,1 +1,11 @@
+# Ignore les fichiers d'environnement virtuel
 .venv/
+venv/
+
+# Ignore les fichiers compilés Python
+*.pyc
+__pycache__/
+
+# Ignore les logs et fichiers temporaires
+*.log
+*.sqlite3
