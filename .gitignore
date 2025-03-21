@@ -5,7 +5,10 @@ venv/
 # Ignore les fichiers compilés Python
 *.pyc
 __pycache__/
-
+*.pyo
+*.pyd
 # Ignore les logs et fichiers temporaires
 *.log
 *.sqlite3
+.env
+

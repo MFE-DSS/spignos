@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from backend.spignosapi.views import chat_page
+from .views import chat_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),

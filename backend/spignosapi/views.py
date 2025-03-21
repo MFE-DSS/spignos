@@ -2,9 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from backend.spignosapi.api.models import Conversation, Message
+from .api.models import Conversation, Message
 
-from backend.spignosapi.api.serializers import MessageSerializer  # ✅ Correction de l'importation
+from .api.serializers import MessageSerializer  # ✅ Correction de l'importation
 
 from transformers import pipeline
 from sentence_transformers import SentenceTransformer
