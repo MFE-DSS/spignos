@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from .api.models import Conversation, Message
 
 from .api.serializers import MessageSerializer  # ✅ Correction de l'importation
+from .llm.handler import LLMHandler
 
 from transformers import pipeline
 from sentence_transformers import SentenceTransformer
@@ -12,6 +13,19 @@ import faiss
 import numpy as np
 
 from django.shortcuts import render
+
+#à tester
+
+from spignosapi.llm.handler import LLMHandler
+
+llm_handler = LLMHandler()
+
+def chat_page(request):
+    if request.method == 'POST':
+        prompt = request.POST.get("message", "")
+        response_text = llm_handler.generate_response(prompt)
+        return render(request, "chat.html", {"response": response_text, "message": prompt})
+    return render(request, "chat.html")
 
 
 # 🔹 Charger un modèle de génération de texte (LLM)
