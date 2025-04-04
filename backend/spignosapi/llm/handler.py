@@ -1,16 +1,36 @@
 import os
-from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LLM_MODEL_PATH = os.path.join(BASE_DIR, '../../llm_models/mistral')  # Adapté pour être relatif à settings.py
+from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
 
 class LLMHandler:
     def __init__(self):
-        print("[INFO] Loading local LLM model from:", LLM_MODEL_PATH)
-        self.tokenizer = AutoTokenizer.from_pretrained(LLM_MODEL_PATH)
-        self.model = AutoModelForCausalLM.from_pretrained(LLM_MODEL_PATH)
-        self.pipeline = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer)
+        # 🔁 Chemin relatif vers le modèle stocké localement
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.model_path = os.path.join(base_dir, '..', 'llm_models', 'mistral')
 
-    def generate_response(self, prompt, max_length=100):
-        output = self.pipeline(prompt, max_new_tokens=max_length, do_sample=True, temperature=0.7)
-        return output[0]["generated_text"]
+        # 🧠 Chargement du tokenizer et du modèle (une seule fois)
+        print(f"🔧 Chargement du modèle depuis {self.model_path}...")
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_path)
+        self.model = AutoModelForCausalLM.from_pretrained(
+            self.model_path,
+            torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+            device_map="auto"  # auto = GPU si dispo
+        )
+        print("✅ Modèle chargé.")
+
+    def generate(self, prompt, max_tokens=256, temperature=0.7, top_p=0.95):
+        # 🔢 Préparation de l'entrée
+        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
+
+        # 🎯 Génération
+        outputs = self.model.generate(
+            **inputs,
+            max_new_tokens=max_tokens,
+            temperature=temperature,
+            top_p=top_p,
+            do_sample=True
+        )
+
+        # 🧾 Extraction de la réponse
+        generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return generated_text[len(prompt):].strip()

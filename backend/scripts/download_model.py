@@ -1,21 +1,24 @@
 import os
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from huggingface_hub import snapshot_download
 
-# Nom du modèle Hugging Face
+# === CONFIGURATION ===
 model_name = "codellama/CodeLlama-7b-Python-hf"
+local_model_path = os.path.abspath(os.path.join("..", "llm_models", "mistral"))
 
-# Répertoire local où enregistrer le modèle
-local_model_path = os.path.join("..", "llm_models", "mistral")
+# === TÉLÉCHARGEMENT SANS CHARGEMENT DU MODÈLE ===
+print(f"📥 Téléchargement sans chargement en mémoire de {model_name}")
+print(f"📁 Dossier local : {local_model_path}")
 
-# Vérifie si le modèle existe déjà localement
 if not os.path.exists(local_model_path):
-    print(f"Téléchargement du modèle {model_name} vers {local_model_path}...")
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name)
+    os.makedirs(local_model_path, exist_ok=True)
 
-    # Sauvegarde locale
-    tokenizer.save_pretrained(local_model_path)
-    model.save_pretrained(local_model_path)
-    print("Téléchargement et sauvegarde terminés.")
-else:
-    print(f"Le modèle est déjà présent dans {local_model_path}.")
+# Télécharge les fichiers sans jamais instancier un modèle
+snapshot_download(
+    repo_id=model_name,
+    local_dir=local_model_path,
+    local_dir_use_symlinks=False,
+    revision="main",
+    resume_download=True,
+)
+
+print("✅ Modèle téléchargé avec succès.")

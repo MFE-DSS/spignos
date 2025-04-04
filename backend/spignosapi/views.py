@@ -20,11 +20,19 @@ from spignosapi.llm.handler import LLMHandler
 
 llm_handler = LLMHandler()
 
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
+
+llm = LLMHandler()  # Chargement une seule fois
+
+@csrf_exempt
 def chat_page(request):
-    if request.method == 'POST':
-        prompt = request.POST.get("message", "")
-        response_text = llm_handler.generate_response(prompt)
-        return render(request, "chat.html", {"response": response_text, "message": prompt})
+    if request.method == "POST":
+        user_input = request.POST.get("message", "")
+        llm_response = llm.generate(user_input)
+        return JsonResponse({"response": llm_response})
     return render(request, "chat.html")
 
 
