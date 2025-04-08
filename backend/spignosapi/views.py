@@ -37,7 +37,7 @@ def chat_page(request):
 
 
 # 🔹 Charger un modèle de génération de texte (LLM)
-llm_pipeline = pipeline("text-generation", model="mistralai/Mistral-7B-Instruct-v0.1")
+llm_pipeline = pipeline("text-generation", model="./llm_models/mistral", local_files_only=True)
 
 # 🔹 Charger un modèle d'encodage pour la recherche (RAG)
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
