@@ -17,22 +17,23 @@ from django.shortcuts import render
 #à tester
 
 from spignosapi.llm.handler import LLMHandler
+llm_handler = LLMHandler()  # Le modèle ne sera chargé qu'à la première génération
 
-llm_handler = LLMHandler()
+
 
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 
-llm = LLMHandler()  # Chargement une seule fois
 
 @csrf_exempt
 def chat_page(request):
     if request.method == "POST":
-        user_input = request.POST.get("message", "")
-        llm_response = llm.generate(user_input)
-        return JsonResponse({"response": llm_response})
+        prompt = request.POST.get("prompt", "")
+        output = llm_handler.generate(prompt)
+        return render(request, "chat.html", {"prompt": prompt, "response": output})
+
     return render(request, "chat.html")
 
 
@@ -54,10 +55,8 @@ knowledge_vectors = np.array([embedding_model.encode(text) for text in knowledge
 index = faiss.IndexFlatL2(knowledge_vectors.shape[1])
 index.add(knowledge_vectors)
 
-
-def chat_page(request):
-    return render(request, 'chat.html')
-
+from django.shortcuts import render
+from spignosapi.llm.handler import LLMHandler
 
 def retrieve_information(query):
     """
