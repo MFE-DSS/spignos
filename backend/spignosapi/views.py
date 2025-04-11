@@ -60,4 +60,36 @@ def chat_page(request):
 
 class ChatAPI(APIView):
     """
-    🧠 API REST pour générer une réponse
+    🧠 API REST pour générer une réponse à un prompt utilisateur
+    avec une étape RAG (retrieval + génération).
+    """
+
+    def post(self, request, conversation_id=None):
+        user_input = request.data.get("text", "")
+
+        if not user_input:
+            return Response({"error": "Message vide"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 🎯 Récupération ou création de conversation
+        if conversation_id:
+            conversation = get_object_or_404(Conversation, id=conversation_id)
+        else:
+            conversation = Conversation.objects.create(user=request.user)  # à adapter si pas d'authentification
+
+        # 🔍 Recherche d'information RAG
+        retrieved_info = retrieve_information(user_input)
+
+        # 🧠 Création du prompt enrichi
+        prompt = f"Info utile : {retrieved_info}\nQuestion : {user_input}"
+
+        # 💬 Génération de la réponse
+        response_text = llm_handler.generate(prompt)
+
+        # 💾 Sauvegarde dans la base
+        message = Message.objects.create(
+            conversation=conversation,
+            text=user_input,
+            response=response_text
+        )
+
+        return Response(MessageSerializer(message).data, status=status.HTTP_201_CREATED)

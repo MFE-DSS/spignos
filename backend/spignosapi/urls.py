@@ -20,6 +20,12 @@ from .views import chat_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('spignosapi.api.urls')),  # API principale
-    path('chat/', chat_page, name="chat"),  # ✅ Page de chat accessible
+    path('api/', include('spignosapi.api.urls')),
+    path('chat/', chat_page, name="chat"),
+
 ]
+
+from django.shortcuts import redirect
+
+def redirect_root(request):
+    return redirect("chat")
