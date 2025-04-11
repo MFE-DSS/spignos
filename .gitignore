@@ -1,15 +1,27 @@
-
-.venv/
-venv/
-
-
+# === Python & Django ===
 *.pyc
 __pycache__/
 *.pyo
 *.pyd
-
-*.log
+.Python
 *.sqlite3
-.env
+db.sqlite3
 
+# === Environnement virtuel ===
+.venv/
+env/
+ENV/
+
+# === PyCharm ===
+.idea/
+
+# === Modèle LLM local ===
 llm_models/
+scripts/download_model.py
+scripts/test_model.py
+scripts/test_llm.py
+
+# === Fichiers temporaires et logs ===
+*.log
+*.tmp
+.DS_Store
