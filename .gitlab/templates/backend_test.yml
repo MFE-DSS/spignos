@@ -1,0 +1,25 @@
+backend-django-tests:
+  stage: test
+  image: python:3.10
+  services:
+    - postgres:latest
+
+  variables:
+    POSTGRES_DB: spignos
+    POSTGRES_USER: spignos
+    POSTGRES_PASSWORD: spignos_secret
+    POSTGRES_HOST: postgres
+
+  before_script:
+    - apt-get update && apt-get install -y gcc libpq-dev
+    - cd backend
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - python manage.py migrate
+
+  script:
+    - python manage.py test
+
+  only:
+    - main
+    - merge_requests

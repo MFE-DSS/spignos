@@ -1,8 +1,5 @@
-build_test:
-  image: alpine
-  script:
-    - echo "Starting building test..."
-    - mkdir build
-    - cd build
-    - touch result.txt
-    - echo "Test done successfully" > result.txt
+stages:
+  - test
+
+include:
+  - local: '.gitlab/templates/backend_test.yml'
