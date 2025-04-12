@@ -1,5 +1,7 @@
 stages:
+  - lint
   - test
 
 include:
   - local: '.gitlab/templates/backend_test.yml'
+  - local: '.gitlab/templates/lint_python.yml'

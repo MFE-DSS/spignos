@@ -1,0 +1,15 @@
+# .flake8
+
+[flake8]
+max-line-length = 100
+exclude =
+    venv,
+    .git,
+    __pycache__,
+    backend/llm_models,
+    backend/spignosapi/migrations,
+    backend/spignosapi/__pycache__,
+    frontend/node_modules
+ignore =
+    E203,  # whitespace before ':'
+    W503   # line break before binary operator
