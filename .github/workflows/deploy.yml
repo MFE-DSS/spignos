@@ -47,6 +47,12 @@ jobs:
           pip install flake8 black
           pip install -r backend/requirements.txt
 
+      - name: Ensure no virtualenv is committed
+        run: |
+          if git ls-files | grep -q '.venv'; then
+            echo " The .venv folder is commited, stop."
+            exit 1
+          fi
       - name: Run flake8
         run: cd backend && flake8 .
 

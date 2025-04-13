@@ -1,9 +1,6 @@
 # === Python & Django ===
-*.pyc
+*.py[cod]
 __pycache__/
-*.pyo
-*.pyd
-.Python
 *.sqlite3
 db.sqlite3
 
@@ -15,13 +12,25 @@ ENV/
 # === PyCharm ===
 .idea/
 
-# === Modèle LLM local ===
+# === LLM Models & Scripts (pas versionné) ===
 llm_models/
-scripts/download_model.py
-scripts/test_model.py
-scripts/test_llm.py
+backend/scripts/*.py
 
-# === Fichiers temporaires et logs ===
+# === Logs & fichiers temporaires ===
 *.log
 *.tmp
-.DS_Store
+*.swp
+*.bak
+*.orig
+*.DS_Store
+
+# === Build / wheel ===
+build/
+dist/
+*.egg-info/
+
+# === Autres caches ===
+.cache/
+.mypy_cache/
+.pytest_cache/
+__pypackages__/
