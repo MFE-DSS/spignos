@@ -3,6 +3,7 @@ import os
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
+
 class LLMHandler:
     def __init__(self):
         self.tokenizer = None

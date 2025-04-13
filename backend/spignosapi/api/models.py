@@ -5,6 +5,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Conversation(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="conversations")
@@ -12,6 +13,7 @@ class Conversation(models.Model):
 
     class Meta:
         app_label = 'api'  # Ajoute ceci pour préciser l'application
+
 
 class Message(models.Model):
     id = models.AutoField(primary_key=True)

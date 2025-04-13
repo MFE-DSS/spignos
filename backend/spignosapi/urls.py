@@ -27,5 +27,6 @@ urlpatterns = [
 
 ]
 
+
 def redirect_root(request):
     return redirect("chat")
