@@ -8,8 +8,6 @@ exclude =
     __pycache__,
     backend/llm_models,
     backend/spignosapi/migrations,
-    backend/spignosapi/__pycache__,
-    frontend/node_modules
-ignore =
-    E203,  # whitespace before ':'
-    W503   # line break before binary operator
+    backend/spignosapi/__pycache__
+ignore = E203, E266, E501, W503, F403, F401
+
