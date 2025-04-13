@@ -1,7 +1,3 @@
-"""✅ Pourquoi ?
-
-    Les URLs suivent une convention REST propre."""
-
 from django.urls import path, include
 from .views import CreateConversation, ListConversations, ChatAPI
 
@@ -12,4 +8,3 @@ urlpatterns = [
     path('chat/<int:conversation_id>/', ChatAPI.as_view(), name="chat_api"),
     path('api/auth/', include('spignosapi.api.auth_url')),
 ]
-

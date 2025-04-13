@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import chat_page
+from django.shortcuts import redirect
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,8 +26,6 @@ urlpatterns = [
     path('chat/', chat_page, name="chat"),
 
 ]
-
-from django.shortcuts import redirect
 
 def redirect_root(request):
     return redirect("chat")
