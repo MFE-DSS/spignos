@@ -4,6 +4,8 @@
 max-line-length = 100
 exclude =
     venv,
+    .venv,
+    **/site-package/*,
     .git,
     __pycache__,
     backend/llm_models,

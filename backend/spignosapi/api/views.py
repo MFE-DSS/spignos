@@ -34,12 +34,3 @@ class ChatAPI(APIView):
 
         message = Message.objects.create(conversation=conversation, text=text, response=response_text)
         return Response(MessageSerializer(message).data, status=status.HTTP_201_CREATED)
-
-
-
-
-class ChatAPI(RateLimitedAPIView, APIView):
-    def post(self, request):
-        message = request.data.get('message', '')
-        response_text = f"SPIGNOS AI Response: {message[::-1]}"  # Simulation
-        return Response({"response": response_text})

@@ -1,6 +1,7 @@
 from django_ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator
 from rest_framework.views import APIView
+from django.http import JsonResponse
 
 import logging
 
