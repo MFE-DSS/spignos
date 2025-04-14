@@ -9,6 +9,7 @@ from spignosapi.llm.handler import LLMHandler
 from sentence_transformers import SentenceTransformer
 import numpy as np
 import faiss
+from drf_spectacular.utils import extend_schema
 
 
 # Initialisation LLM + Embedding
@@ -35,11 +36,18 @@ def retrieve_information(query: str) -> str:
     return "Pas d'information pertinente trouvée."
 
 
+@extend_schema(
+    request=MessageSerializer,
+    responses=MessageSerializer,
+    description="Crée un message et génère une réponse via LLM.",
+    tags=["Chat"],
+)
 class ChatAPI(APIView):
     """
     POST /api/chat/ : Génère une réponse avec le LLM (et crée la conversation si nécessaire).
     """
 
+    serializer_class = MessageSerializer
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -81,6 +89,7 @@ class ConversationMessagesAPI(APIView):
     GET /api/chat/<conversation_id>/ : Récupère tout l’historique d'une conversation.
     """
 
+    serializer_class = MessageSerializer
     permission_classes = [AllowAny]
 
     def get(self, request, conversation_id):

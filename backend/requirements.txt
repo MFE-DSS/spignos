@@ -12,3 +12,5 @@ faiss-cpu
 accelerate>=0.26.0
 black
 pre-commit
+drf-spectacular
+drf-spectacular==0.28.0

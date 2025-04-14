@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: SPIGNOS API
+  version: 1.0.0
+  description: API pour interagir avec le modèle LLM local via un système RAG.
+paths:
+  /api/chat/:
+    post:
+      operationId: chat_create
+      description: Crée un message et génère une réponse via LLM.
+      tags:
+      - Chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Message'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Message'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: ''
+  /api/chat/{conversation_id}/:
+    get:
+      operationId: chat_retrieve
+      description: 'GET /api/chat/<conversation_id>/ : Récupère tout l’historique
+        d''une conversation.'
+      parameters:
+      - in: path
+        name: conversation_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - chat
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: ''
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+        response:
+          type: string
+          nullable: true
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        conversation:
+          type: integer
+      required:
+      - conversation
+      - id
+      - text
+      - timestamp
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
