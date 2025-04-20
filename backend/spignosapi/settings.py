@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-STATICFILES_DIRS = [BASE_DIR / "assets"]
+STATICFILES_DIRS = [BASE_DIR / "spignosapi/static"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",

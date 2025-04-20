@@ -62,7 +62,8 @@
 <body>
 
     <header>
-        <img src="/assets/SPIGNOS.png" alt="SPIGNOS Logo">
+        {% load static %}
+        <img src="{% static 'SPIGNOS.png' %}" alt="SPIGNOS Logo">
         <h1>Bienvenue sur SPIGNOS</h1>
         <p>Plateforme structurée de génération augmentée par récupération pour vos projets LLM.</p>
     </header>
