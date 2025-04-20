@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class RateLimitedAPIView(APIView):
-    @method_decorator(ratelimit(key='ip', rate='10/m', method='POST', block=True))
+    @method_decorator(ratelimit(key="ip", rate="10/m", method="POST", block=True))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -22,5 +22,5 @@ class CustomErrorMiddleware:
             response = self.get_response(request)
         except Exception as e:
             logger.error(f"Erreur API : {str(e)}")
-            return JsonResponse({'error': 'Une erreur interne est survenue'}, status=500)
+            return JsonResponse({"error": "Une erreur interne est survenue"}, status=500)
         return response

@@ -9,7 +9,7 @@ class LLMHandler:
         self.tokenizer = None
         self.model = None
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.model_path = os.path.join(base_dir, '..', 'llm_models', 'mistral')
+        self.model_path = os.path.join(base_dir, "..", "llm_models", "mistral")
 
     def _load_model(self):
         if self.model is None or self.tokenizer is None:
@@ -18,7 +18,7 @@ class LLMHandler:
             self.model = AutoModelForCausalLM.from_pretrained(
                 self.model_path,
                 torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
-                device_map="auto"
+                device_map="auto",
             )
             print("✅ Modèle chargé.")
 
@@ -30,7 +30,7 @@ class LLMHandler:
             max_new_tokens=max_tokens,
             temperature=temperature,
             top_p=top_p,
-            do_sample=True
+            do_sample=True,
         )
         generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-        return generated_text[len(prompt):].strip()
+        return generated_text[len(prompt) :].strip()
