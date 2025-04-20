@@ -18,11 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import chat_page
+from .views import home_view
 from django.shortcuts import redirect
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 
 urlpatterns = [
+    path("", home_view, name="home"),
     path("admin/", admin.site.urls),
     path("api/", include("spignosapi.api.urls")),
     path("chat/", chat_page, name="chat"),

@@ -3,17 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPIGNOS API</title>
+    <title>SPIGNOS - Accueil</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        h1 { color: #333; }
-        a { display: inline-block; margin-top: 20px; text-decoration: none; background: #007bff; color: white; padding: 10px 20px; border-radius: 5px; }
-        a:hover { background: #0056b3; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            padding: 60px 20px 30px;
+        }
+
+        header img {
+            width: 120px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .button-group {
+            margin-top: 40px;
+        }
+
+        .button-group a {
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 6px;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .button-group a:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            margin-top: 60px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
     </style>
 </head>
 <body>
-    <h1>Bienvenue sur l'API SPIGNOS</h1>
-    <p>Cette API permet d'interagir avec un modèle LLM utilisant du Retrieval-Augmented Generation (RAG).</p>
-    <a href="/api/">Accéder à l'API</a>
+
+    <header>
+        <img src="/assets/SPIGNOS.png" alt="SPIGNOS Logo">
+        <h1>Bienvenue sur SPIGNOS</h1>
+        <p>Plateforme structurée de génération augmentée par récupération pour vos projets LLM.</p>
+    </header>
+
+    <div class="button-group">
+        <a href="/chat/">Accéder au Chat</a>
+        <a href="/api/docs/swagger/">Documentation Swagger</a>
+        <!--<a href="/admin/">Accès Admin</a>-->
+    </div>
+
+    <footer>
+        SPIGNOS &copy; {{ year }} — Tous droits réservés.
+    </footer>
+
 </body>
 </html>

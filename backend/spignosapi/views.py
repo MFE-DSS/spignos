@@ -4,6 +4,9 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
+from datetime import datetime
 
 from .api.models import Conversation, Message
 from .api.serializers import MessageSerializer
@@ -23,13 +26,19 @@ embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 knowledge_base = [
     "L'IA est utile pour l'automatisation des tâches.",
     "Un modèle LLM peut être utilisé pour la génération de texte.",
-    "Le RAG combine un modèle LLM et une base de recherche pour générer des réponses plus précises."
+    "Le RAG combine un modèle LLM et une base de recherche pour générer des réponses plus précises.",
 ]
 
 # ⚙️ Indexation FAISS pour recherche vectorielle
-knowledge_vectors = np.array([embedding_model.encode(text) for text in knowledge_base], dtype="float32")
+knowledge_vectors = np.array(
+    [embedding_model.encode(text) for text in knowledge_base], dtype="float32"
+)
 index = faiss.IndexFlatL2(knowledge_vectors.shape[1])
 index.add(knowledge_vectors)
+
+
+def home_view(request):
+    return render(request, "home.html", {"year": datetime.now().year})
 
 
 def retrieve_information(query: str) -> str:
@@ -48,8 +57,16 @@ def retrieve_information(query: str) -> str:
 @csrf_exempt
 def chat_page(request):
     """
-    🌐 Vue front pour la page de chat (HTML).
+    🌐 Vue frontend : gère la session utilisateur et affiche la page HTML.
     """
+    if not request.session.get("user_id"):
+        # 🔐 Création d’un utilisateur anonyme
+        username = f"anon_{get_random_string(8)}"
+        user = User.objects.create_user(username=username)
+        request.session["user_id"] = user.id
+    else:
+        user = get_object_or_404(User, id=request.session["user_id"])
+
     if request.method == "POST":
         prompt = request.POST.get("prompt", "")
         output = llm_handler.generate(prompt)
@@ -74,7 +91,9 @@ class ChatAPI(APIView):
         if conversation_id:
             conversation = get_object_or_404(Conversation, id=conversation_id)
         else:
-            conversation = Conversation.objects.create(user=request.user)  # à adapter si pas d'authentification
+            conversation = Conversation.objects.create(
+                user=request.user
+            )  # à adapter si pas d'authentification
 
         # 🔍 Recherche d'information RAG
         retrieved_info = retrieve_information(user_input)
@@ -87,9 +106,7 @@ class ChatAPI(APIView):
 
         # 💾 Sauvegarde dans la base
         message = Message.objects.create(
-            conversation=conversation,
-            text=user_input,
-            response=response_text
+            conversation=conversation, text=user_input, response=response_text
         )
 
         return Response(MessageSerializer(message).data, status=status.HTTP_201_CREATED)

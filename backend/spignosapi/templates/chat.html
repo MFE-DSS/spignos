@@ -111,7 +111,9 @@
             <button class="send-button" onclick="sendMessage()">➤</button>
         </div>
     </div>
-
+    <script>
+    const userId = "{{ request.session.user_id }}";
+    </script>
     <script>
         function sendMessage() {
             let inputField = document.getElementById("chatInput");
@@ -131,8 +133,12 @@
             fetch('/api/chat/', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ "text": messageText })
+                body: JSON.stringify({
+                    "text": messageText,
+                    "user_id": userId
+                })
             })
+
             .then(response => response.json())
             .then(data => {
                 let aiMessage = document.createElement("div");
