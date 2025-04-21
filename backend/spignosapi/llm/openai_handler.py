@@ -1,10 +1,12 @@
 import openai
 import os
 
+openai_api_key = os.environ.get("OPENAI_API_KEY")
+
 
 class OpenAIHandler:
     def __init__(self):
-        self.api_key = os.getenv("OPENAI_API_KEY")
+        self.api_key = openai_api_key
         openai.api_key = self.api_key
 
     def generate(self, prompt, max_tokens=256, temperature=0.7, model="gpt-4"):

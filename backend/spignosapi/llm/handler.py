@@ -3,7 +3,8 @@ import os
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
-from spignosapi.llm.handlers.openai_handler import OpenAIHandler
+from spignosapi.llm.openai_handler import OpenAIHandler
+
 
 # Décommenter si local fonctionne
 # from spignosapi.llm.handlers.local_handler import LLMHandler

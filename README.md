@@ -9,3 +9,9 @@
 <p align="center">
     <b>Structured Platform for Interoperable Generative, Normalized, and Optimized Systems</b>
 </p>
+</p>
+</p>
+
+
+#en cas d'usage d'une api llm externe
+📁 Créez un fichier `.env` dans `/backend` :

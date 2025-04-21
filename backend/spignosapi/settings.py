@@ -20,10 +20,6 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Charger le fichier .env
 load_dotenv(BASE_DIR / ".env")
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-87nnqmf_+n*@po3f^v9=105v7u6hygzc^m61+j*t&=3k8)kd*g"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -58,7 +54,7 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
-
+SECRET_KEY = "to_be_defined"
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
