@@ -16,8 +16,10 @@ from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
 
-# ⚙️ Chargement unique du modèle LLM (handler local)
-llm_handler = LLMHandler()
+from spignosapi.llm.handler import UnifiedLLMHandler
+
+llm_handler = UnifiedLLMHandler(use_openai=True)
+
 
 # ⚙️ Modèle d'embedding pour la recherche sémantique
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")

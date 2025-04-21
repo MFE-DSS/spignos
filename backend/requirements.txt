@@ -14,3 +14,4 @@ black
 pre-commit
 drf-spectacular
 drf-spectacular==0.28.0
+openai

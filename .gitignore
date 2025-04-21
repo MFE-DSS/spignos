@@ -9,6 +9,8 @@ db.sqlite3
 venv/
 env/
 ENV/
+.env/
+.ENV/
 
 # === PyCharm ===
 .idea/
