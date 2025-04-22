@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from spignosapi.api.models import Conversation, Message
 from spignosapi.api.serializers import MessageSerializer
-from spignosapi.llm.handler import LLMHandler
+from spignosapi.llm.handler import LLMHandler, UnifiedLLMHandler
 from sentence_transformers import SentenceTransformer
 import numpy as np
 import faiss
@@ -15,7 +15,7 @@ from drf_spectacular.utils import extend_schema
 
 
 # Initialisation LLM + Embedding
-llm_handler = LLMHandler(use_openai=True)
+llm_handler = UnifiedLLMHandler(use_openai=True)
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 knowledge_base = [
