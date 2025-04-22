@@ -16,10 +16,11 @@ class UnifiedLLMHandler:
         if self.use_openai:
             self.handler = OpenAIHandler()
         else:
-            pass
-            """from spignosapi.llm.handlers.local_handler import LLMHandler
-
-            self.handler = LLMHandler()"""
+            raise RuntimeError("Le modèle local est désactivé temporairement.")
+            """
+            from spignosapi.llm.handlers.local_handler import LLMHandler
+            self.handler = LLMHandler()
+            """
 
     def generate(self, prompt):
         return self.handler.generate(prompt)

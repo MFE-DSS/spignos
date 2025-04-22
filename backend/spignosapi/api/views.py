@@ -15,7 +15,7 @@ from drf_spectacular.utils import extend_schema
 
 
 # Initialisation LLM + Embedding
-llm_handler = LLMHandler()
+llm_handler = LLMHandler(use_openai=True)
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 knowledge_base = [
