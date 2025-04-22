@@ -3,7 +3,7 @@ import os
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
-from spignosapi.llm.openai_handler import OpenAIHandler
+from .openai_handler import OpenAIHandler
 
 
 # Décommenter si local fonctionne
@@ -16,9 +16,10 @@ class UnifiedLLMHandler:
         if self.use_openai:
             self.handler = OpenAIHandler()
         else:
-            from spignosapi.llm.handlers.local_handler import LLMHandler
+            pass
+            """from spignosapi.llm.handlers.local_handler import LLMHandler
 
-            self.handler = LLMHandler()
+            self.handler = LLMHandler()"""
 
     def generate(self, prompt):
         return self.handler.generate(prompt)
