@@ -18,6 +18,8 @@ jobs:
           POSTGRES_USER: spignos
           POSTGRES_PASSWORD: spignos_secret
           POSTGRES_DB: spignos
+          POSTGRES_HOST: localhost
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         ports:
           - 5432:5432
         options: >-

@@ -12,6 +12,9 @@ ENV/
 .env/
 .ENV/
 backend/.env
+.env
+
+backend/.env
 # === PyCharm ===
 .idea/
 
