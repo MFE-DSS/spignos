@@ -6,10 +6,6 @@ import torch
 from .openai_handler import OpenAIHandler
 
 
-# Décommenter si local fonctionne
-# from spignosapi.llm.handlers.local_handler import LLMHandler
-
-
 class UnifiedLLMHandler:
     def __init__(self, use_openai=True):
         self.use_openai = use_openai
