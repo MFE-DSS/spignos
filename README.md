@@ -11,7 +11,3 @@
 </p>
 </p>
 </p>
-
-
-#en cas d'usage d'une api llm externe
-📁 Créez un fichier `.env` dans `/backend` :
