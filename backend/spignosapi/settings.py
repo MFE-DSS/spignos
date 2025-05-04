@@ -24,6 +24,11 @@ load_dotenv(BASE_DIR / ".env")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/chat/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
+
 ALLOWED_HOSTS = []
 
 # Application definition
