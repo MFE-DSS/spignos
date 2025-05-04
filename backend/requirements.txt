@@ -17,3 +17,5 @@ drf-spectacular==0.28.0
 openai
 dotenv
 openai>=1.0.0
+black
+flake8

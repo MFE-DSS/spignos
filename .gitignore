@@ -14,7 +14,7 @@ ENV/
 backend/.env
 .env
 
-backend/.env
+
 # === PyCharm ===
 .idea/
 
@@ -42,4 +42,7 @@ dist/
 __pypackages__/
 backend/.env
 backend/.env
-test
+__pycache__/
+*.pyc
+*.pyo
+*.pyd

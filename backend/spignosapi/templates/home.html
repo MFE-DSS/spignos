@@ -69,9 +69,13 @@
     </header>-->
 
     <div class="button-group">
-        <a href="/chat/">Accéder au Chat</a>
+        {% if user.is_authenticated %}
+            <a href="/chat/">Accéder au Chat</a>
+            <a href="/accounts/logout/">Déconnexion</a>
+        {% else %}
+            <a href="/accounts/login/">Connexion</a>
+        {% endif %}
         <a href="/api/docs/swagger/">Documentation Swagger</a>
-        <!--<a href="/admin/">Accès Admin</a>-->
     </div>
 
     <footer>

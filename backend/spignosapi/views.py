@@ -6,6 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
 from datetime import datetime
 
 from .api.models import Conversation, Message
@@ -39,6 +42,19 @@ index = faiss.IndexFlatL2(knowledge_vectors.shape[1])
 index.add(knowledge_vectors)
 
 
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("/chat/")
+        else:
+            return render(request, "login.html", {"error": "Identifiants invalides"})
+    return render(request, "login.html")
+
+
 def home_view(request):
     return render(request, "home.html", {"year": datetime.now().year})
 
@@ -57,6 +73,7 @@ def retrieve_information(query: str) -> str:
 
 
 @csrf_exempt
+@login_required
 def chat_page(request):
     """
     🌐 Vue frontend : gère la session utilisateur et affiche la page HTML.
