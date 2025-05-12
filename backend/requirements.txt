@@ -19,3 +19,6 @@ dotenv
 openai>=1.0.0
 black
 flake8
+sentence-transformers
+faiss-cpu
+numpy
