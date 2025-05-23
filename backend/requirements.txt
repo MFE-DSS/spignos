@@ -22,3 +22,5 @@ flake8
 sentence-transformers
 faiss-cpu
 numpy
+PyMuPDF
+python-docx
