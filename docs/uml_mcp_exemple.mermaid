@@ -1,0 +1,54 @@
+classDiagram
+    class AdviseAPI {
+        +POST /api/advise/ (request)
+        +return Response (JSON)
+    }
+    class PromptOrchestrator {
+        +compose_prompt(user_message)
+        +gather_agent_suggestions(user_message)
+        +generate_response(composite_prompt)
+    }
+    class PersonaLayer {
+        +get_persona_prompt(agent_or_role)
+    }
+    class ContextLayer {
+        +get_context(user_message)
+    }
+    class MessageLayer {
+        +prepare_user_message(user_message)
+    }
+    class AgentBase {
+        <<abstract>>
+        +name
+        +get_suggestion(user_message)
+    }
+    class UdemyAgent {
+        +name = "Udemy"
+        +get_suggestion(user_message)
+        -udemy_api_key
+    }
+    class TechDiagAgent {
+        +name = "TechDiag"
+        +get_suggestion(user_message)
+    }
+    class CareerAgent {
+        +name = "Career"
+        +get_suggestion(user_message)
+    }
+    class OpenAIHandler {
+        +call_openai(prompt) 
+    }
+    class LocalModelHandler {
+        +generate_local(prompt)
+    }
+
+    AdviseAPI --> PromptOrchestrator : « Appel au service »
+    PromptOrchestrator --> PersonaLayer : utilise
+    PromptOrchestrator --> ContextLayer : utilise
+    PromptOrchestrator --> MessageLayer : utilise
+    PromptOrchestrator --> AgentBase : interroge (plusieurs agents)
+    AgentBase <|-- UdemyAgent
+    AgentBase <|-- TechDiagAgent
+    AgentBase <|-- CareerAgent
+    PromptOrchestrator --> OpenAIHandler : appel API (si disponible)
+    PromptOrchestrator --> LocalModelHandler : fallback local
