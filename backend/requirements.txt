@@ -23,4 +23,8 @@ sentence-transformers
 faiss-cpu
 numpy
 PyMuPDF
-python-docx
+
+
+
+django-cors-headers==4.3.1
+django-filter==23.5

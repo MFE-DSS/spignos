@@ -7,17 +7,17 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import api from '@/services/api'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
 export default {
   setup() {
-    const messages = ref([])
+    const store = useStore()
+    const messages = computed(() => store.state.messages)
 
     const sendMessage = async (text) => {
       try {
-        const response = await api.post('/chat/', { text })
-        messages.value.push(response.data)
+        await store.dispatch('sendMessage', text)
       } catch (error) {
         console.error('Erreur:', error)
       }

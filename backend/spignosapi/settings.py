@@ -44,15 +44,17 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework",
     "corsheaders",
-    "rest_framework",
     "spignosapi.api",
     "drf_spectacular",
 ]
 REST_FRAMEWORK = {
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
 }
 
 SPECTACULAR_SETTINGS = {
@@ -137,6 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
     "http://localhost:5173",  # URL du frontend Vue.js
 ]
 # Internationalization

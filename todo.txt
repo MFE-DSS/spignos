@@ -1,0 +1,19 @@
+**Synthèse du travail effectué :**
+1. **Objectif initial** : Mise en place d'une API REST avec Django REST Framework
+2. **Problèmes rencontrés** :
+    - Absence du modèle `Chat`
+    - Problèmes d'imports dans les vues
+    - Structure de l'application à organiser
+
+**Points à terminer :**
+1. Finaliser la structure des modèles dans `spignosapi/api/models.py`
+2. Compléter les sérialiseurs dans `serializers.py`
+3. Configurer correctement les vues API
+4. Finaliser les migrations
+5. Tester les endpoints API
+
+**Points importants à retenir :**
+- Structure modulaire : api/, models/, views/
+- Configuration DRF dans settings.py
+- Gestion des routes avec DefaultRouter
+- Importance des migrations propres

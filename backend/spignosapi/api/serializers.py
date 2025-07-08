@@ -4,13 +4,14 @@ Convertit les modèles en JSON pour les réponses API.
 Relation entre Conversation et Messages."""
 
 from rest_framework import serializers
-from .models import Conversation, Message
+from .models import Conversation, Message, Chat
 
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
+        fields = ['id', 'content', 'timestamp', 'sender']
         model = Message
-        fields = "__all__"
+
 
 
 class ConversationSerializer(serializers.ModelSerializer):
@@ -19,3 +20,8 @@ class ConversationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversation
         fields = "__all__"
+
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = '__all__'  # ou spécifiez les champs que vous voulez exposer

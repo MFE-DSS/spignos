@@ -20,14 +20,23 @@ from django.urls import path, include
 from .views import chat_page, login_view
 from .views import home_view
 from django.shortcuts import redirect
+from rest_framework.routers import DefaultRouter
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from .views import (
+    chat_page,
+    login_view,
+    home_view,
+    ChatViewSet
+)
+router = DefaultRouter()
+router.register(r'chat', ChatViewSet, basename='chat')
 
 
 urlpatterns = [
     # path("", home_view, name="home"),
     path("", include("spignosapi.chat_urls")),
     path("admin/", admin.site.urls),
-    path("api/", include("spignosapi.api.urls")),
+    path('api/', include(router.urls)),
     path("chat/", chat_page, name="chat"),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
