@@ -1,0 +1,68 @@
+name: CI - SPIGNOS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend:
+    name: Lint + Test Backend
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: spignos
+          POSTGRES_PASSWORD: spignos_secret
+          POSTGRES_DB: spignos
+          POSTGRES_HOST: localhost
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      POSTGRES_USER: spignos
+      POSTGRES_PASSWORD: spignos_secret
+      POSTGRES_DB: spignos
+      POSTGRES_HOST: localhost
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install flake8 black
+          pip install -r backend/requirements.txt
+
+      - name: Ensure no virtualenv is committed
+        run: |
+          if git ls-files | grep -q '.venv'; then
+            echo " The .venv folder is commited, stop."
+            exit 1
+          fi
+      - name: Run flake8
+        run: cd backend && flake8 .
+
+      - name: Check black formatting
+        run: cd backend && black . --check
+
+      - name: 🧪 Run Django tests
+        run: |
+          cd backend
+          python manage.py migrate
+          python manage.py test

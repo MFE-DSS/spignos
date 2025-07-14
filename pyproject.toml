@@ -1,0 +1,17 @@
+# pyproject.toml
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | .venv
+  | venv
+  | __pycache__
+  | llm_models
+  | migrations
+  | node_modules
+)/
+'''

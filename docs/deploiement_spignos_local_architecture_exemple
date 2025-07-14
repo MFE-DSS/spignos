@@ -1,0 +1,49 @@
+@startuml
+
+!define RECTANGLE class
+skinparam classStyle uml2
+skinparam dpi 150
+
+package "Infrastructure SPIGNOS" {
+
+  node "VPS OVH (DMZ)" as VPS {
+    component "Django App\n(Gunicorn)" as django
+    component "NGINX Proxy" as nginx
+    file "settings.py" as settings
+  }
+
+  node "SRV-DB (LAN)\n192.168.10.50" as DB {
+    database "PostgreSQL" as postgres
+  }
+
+  node "SRV-WEB (LAN)\n192.168.10.21" as web {
+    component "GLPI / Apache / IIS"
+  }
+
+  node "SRV-DC (LAN)\n192.168.10.2" as dc {
+    component "ADDS + DNS + LDAP" as ad
+  }
+
+  node "FortiGate FW" as FW {
+    component "VIP Rule\nspignos.com => 192.168.10.21"
+    component "NAT & Rules"
+  }
+
+  node "Cloudflare" as cloudflare {
+    component "SSL + DNS\nProxy + Certbot"
+  }
+}
+
+
+cloudflare --> FW : HTTPS spignos.com
+FW --> VPS : redirige via VIP / port 80/443
+VPS --> nginx : HTTP Request
+nginx --> django : Proxy to Gunicorn
+
+django --> postgres : Connexion DB\n192.168.10.50:5432
+
+django --> dc : LDAP Auth (via\nGLPI ou future API)
+web --> dc : DNS/LDAP
+web --> postgres : direct ou via Django
+
+@enduml

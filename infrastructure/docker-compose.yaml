@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: spignos_backend
+    restart: always
+    environment:
+      - POSTGRES_DB=spignos
+      - POSTGRES_USER=spignos
+      - POSTGRES_PASSWORD=spignos_secret
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+
+  postgres:
+    image: postgres:15
+    container_name: spignos_postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=spignos
+      - POSTGRES_USER=spignos
+      - POSTGRES_PASSWORD=spignos_secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: spignos_prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+volumes:
+  postgres_data:
+    driver: local
