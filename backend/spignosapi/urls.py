@@ -34,7 +34,7 @@ urlpatterns = [
     # path("", home_view, name="home"),
     path("", include("spignosapi.chat_urls")),
     path("admin/", admin.site.urls),
-    path("api/", include(router.urls)),
+    path("api/", include('api.urls')),
     path("api-auth/", include("rest_framework.urls")),
     path("chat/", chat_page, name="chat"),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),

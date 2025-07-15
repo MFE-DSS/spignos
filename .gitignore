@@ -53,3 +53,6 @@ models_cache/
 *.safetensors
 models_cache/
 ~/spignos_models/
+.vevn
+vevn
+venv/

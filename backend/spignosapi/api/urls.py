@@ -1,9 +1,11 @@
-from django.urls import include, path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ChatViewSet, ChatAPI, ConversationMessagesAPI
 
-from .views import ChatAPI, ConversationMessagesAPI
+router = DefaultRouter()
+router.register(r'chats', ChatViewSet, basename='chat')
 
 urlpatterns = [
-    path("chat/", ChatAPI.as_view(), name="chat_create_or_reply"),
-    path("chat/<int:conversation_id>/", ConversationMessagesAPI.as_view(), name="chat_history"),
-    path("api/", include("api.advise.urls")),
+    path('', include(router.urls)),
+    path('conversations/', ConversationMessagesAPI.as_view(), name='conversations'),
 ]
